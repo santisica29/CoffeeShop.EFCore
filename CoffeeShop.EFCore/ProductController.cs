@@ -1,10 +1,14 @@
-﻿namespace CoffeeShop.EFCore;
+﻿using Spectre.Console;
+
+namespace CoffeeShop.EFCore;
 
 internal class ProductController
 {
-    internal static void AddProduct()
+    internal static void AddProduct(string name)
     {
-        throw new NotImplementedException();
+        using var db = new ProductContext();
+        db.Add(new Product { Name = name });
+        db.SaveChanges();
     }
 
     internal static void DeleteProduct()
@@ -17,13 +21,20 @@ internal class ProductController
         throw new NotImplementedException();
     }
 
-    internal static void ViewAllProducts()
+    internal static List<Product> ViewAllProducts()
     {
-        throw new NotImplementedException();
+        using var db = new ProductContext();
+        List<Product> products = db.Products.ToList();
+
+        return products;
     }
 
-    internal static void ViewProduct()
+    internal static Product? ViewProduct(int id)
     {
-        throw new NotImplementedException();
+        using var db = new ProductContext();
+
+        Product? product = db.Products.SingleOrDefault(x => x.Id == id);
+
+        return product;
     }
 }

@@ -13,7 +13,8 @@ while (isAppRunning)
     switch (option)
     {
         case MenuOptions.AddProduct:
-            ProductController.AddProduct();
+            string name = AnsiConsole.Ask<string>("Product's name: ");
+            ProductController.AddProduct(name);
             break;
         case MenuOptions.DeleteProduct:
             ProductController.DeleteProduct();
@@ -22,10 +23,13 @@ while (isAppRunning)
             ProductController.UpdateProduct();
             break;
         case MenuOptions.ViewProduct:
-            ProductController.ViewProduct();
+            var id = ProductService.SelectProductId();
+            var product = ProductController.ViewProduct(id);
+            UserInterface.ShowProduct(product);
             break;
         case MenuOptions.ViewAllProducts:
-            ProductController.ViewAllProducts();
+            var products = ProductController.ViewAllProducts();
+            UserInterface.ShowProductsTable(products);
             break;
         case MenuOptions.Quit:
             isAppRunning = false;
