@@ -4,10 +4,10 @@ namespace CoffeeShop.EFCore;
 
 internal class ProductController
 {
-    internal static void AddProduct(string name)
+    internal static void AddProduct(Product product)
     {
         using var db = new ProductContext();
-        db.Add(new Product { Name = name });
+        db.Add(product);
         db.SaveChanges();
     }
 
@@ -33,11 +33,11 @@ internal class ProductController
         return products;
     }
 
-    internal static Product? ViewProduct(int id)
+    internal static Product ViewProduct(int id)
     {
         using var db = new ProductContext();
 
-        Product? product = db.Products.SingleOrDefault(x => x.Id == id);
+        Product product = db.Products.SingleOrDefault(x => x.Id == id);
 
         return product;
     }

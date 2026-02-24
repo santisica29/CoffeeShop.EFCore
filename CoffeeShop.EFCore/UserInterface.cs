@@ -6,11 +6,11 @@ public static class UserInterface
     public static void ShowProductsTable(List<Product> products)
     {
         Table table = new();   
-        table.AddColumns("Id", "Name");
+        table.AddColumns("Id", "Name", "Price");
 
         foreach (Product product in products)
         {
-            table.AddRow(product.Id.ToString(), product.Name);
+            table.AddRow(product.Id.ToString(), product.Name, product.Price.ToString());
         }
 
         AnsiConsole.Write(table);
@@ -23,7 +23,8 @@ public static class UserInterface
     internal static void ShowProduct(Product? product)
     {
         Panel panel = new(@$"Id: {product.Id}
-Name: {product.Name}");
+Name: {product.Name}
+Price: { product.Price}");
         panel.Header = new("Product Info");
         panel.Padding = new(2);
 

@@ -14,7 +14,15 @@ internal class ProductService
     {
         int id = SelectProductId();
         var product = ProductController.ViewProduct(id);
-        product.Name = AnsiConsole.Ask<string>("Product's new name: ");
+
+        product.Name = AnsiConsole.Confirm("Update the name?") 
+            ? AnsiConsole.Ask<string>("Product's new name: ")
+            : product.Name;
+
+        product.Price = AnsiConsole.Confirm("Update the price?")
+            ? AnsiConsole.Ask<decimal>("Product's new price")
+            : product.Price;
+
         ProductController.UpdateProduct(product);
     }
 
@@ -34,7 +42,9 @@ internal class ProductService
     internal static void InsertProduct()
     {
         string name = AnsiConsole.Ask<string>("Product's name: ");
-        ProductController.AddProduct(name);
+        decimal price = AnsiConsole.Ask<decimal>("Product's price: ");
+        Product newProduct = new() { Name = name, Price = price };
+        ProductController.AddProduct(newProduct);
     }
     private static int SelectProductId()
     {
